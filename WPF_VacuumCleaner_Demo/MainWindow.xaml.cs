@@ -18,7 +18,7 @@ namespace WPF_VacuumCleaner_Demo
             InitializeComponent();
         }
 
-        private void Run(string fileName, int x, int y)
+        private void RunBFS(string fileName, int x, int y)
         {
             House house;
             try
@@ -33,7 +33,27 @@ namespace WPF_VacuumCleaner_Demo
 
             VacuumCleaner vacuum = new(x, y, house);
 
-            vacuum.Run();
+            vacuum.RunBFS();
+
+            RefreshCanvas(house, vacuum);
+        }
+
+        private void RunDFS(string fileName, int x, int y)
+        {
+            House house;
+            try
+            {
+                house = VacuumCleanerFileDataAccess.LoadAsync(fileName);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Can't load file.");
+                return;
+            }
+
+            VacuumCleaner vacuum = new(x, y, house);
+
+            vacuum.RunDFS();
 
             RefreshCanvas(house, vacuum);
         }
@@ -98,19 +118,34 @@ namespace WPF_VacuumCleaner_Demo
             }
         }
 
-        private void btnSimpleRoom_Click(object sender, RoutedEventArgs e)
+        private void btnSimpleRoomDFS_Click(object sender, RoutedEventArgs e)
         {
-            Run(Environment.CurrentDirectory + @"\Resources\Simple room.txt", 1, 1);
+            RunDFS(Environment.CurrentDirectory + @"\Resources\Simple room.txt", 1, 1);
         }
 
-        private void btnNarrowPaths_Click(object sender, RoutedEventArgs e)
+        private void btnNarrowPathsDFS_Click(object sender, RoutedEventArgs e)
         {
-            Run(Environment.CurrentDirectory + @"\Resources\Narrow paths.txt", 1, 1);
+            RunDFS(Environment.CurrentDirectory + @"\Resources\Narrow paths.txt", 1, 1);
         }
 
-        private void btnComplexHouse_Click(object sender, RoutedEventArgs e)
+        private void btnComplexHouseDFS_Click(object sender, RoutedEventArgs e)
         {
-            Run(Environment.CurrentDirectory + @"\Resources\Complex house.txt", 1, 1);
+            RunDFS(Environment.CurrentDirectory + @"\Resources\Complex house.txt", 1, 1);
+        }
+
+        private void btnSimpleRoomBFS_Click(object sender, RoutedEventArgs e)
+        {
+            RunBFS(Environment.CurrentDirectory + @"\Resources\Simple room.txt", 1, 1);
+        }
+
+        private void btnNarrowPathsBFS_Click(object sender, RoutedEventArgs e)
+        {
+            RunBFS(Environment.CurrentDirectory + @"\Resources\Narrow paths.txt", 1, 1);
+        }
+
+        private void btnComplexHouseBFS_Click(object sender, RoutedEventArgs e)
+        {
+            RunBFS(Environment.CurrentDirectory + @"\Resources\Complex house.txt", 1, 1);
         }
     }
 }

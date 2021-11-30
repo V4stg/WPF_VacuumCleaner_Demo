@@ -12,13 +12,30 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Margin="10">
-            <Button x:Name="btnSimpleRoom" Content="Simple room"
-                    Padding="5" Margin="2" Width="100" Click="btnSimpleRoom_Click"/>
-            <Button x:Name="btnNarrowPaths" Content="Narrow paths"
-                    Padding="5" Margin="2" Width="100" Click="btnNarrowPaths_Click"/>
-            <Button x:Name="btnComplexHouse" Content="Complex house"
-                    Padding="5" Margin="2" Width="100" Click="btnComplexHouse_Click"/>
+        <StackPanel Orientation="Horizontal">
+            
+            <GroupBox Header="BFS:">
+                <StackPanel Margin="5">
+                    <Button x:Name="btnSimpleRoomBFS" Content="Simple room"
+                        Padding="5" Margin="2" Width="100" Click="btnSimpleRoomBFS_Click"/>
+                    <Button x:Name="btnNarrowPathsBFS" Content="Narrow paths"
+                        Padding="5" Margin="2" Width="100" Click="btnNarrowPathsBFS_Click"/>
+                    <Button x:Name="btnComplexHouseBFS" Content="Complex house"
+                        Padding="5" Margin="2" Width="100" Click="btnComplexHouseBFS_Click"/>
+                </StackPanel>
+            </GroupBox>
+            
+            <GroupBox Header="DFS:">
+                <StackPanel Margin="5">
+                    <Button x:Name="btnSimpleRoomDFS" Content="Simple room"
+                        Padding="5" Margin="2" Width="100" Click="btnSimpleRoomDFS_Click"/>
+                    <Button x:Name="btnNarrowPathsDFS" Content="Narrow paths"
+                        Padding="5" Margin="2" Width="100" Click="btnNarrowPathsDFS_Click"/>
+                    <Button x:Name="btnComplexHouseDFS" Content="Complex house"
+                        Padding="5" Margin="2" Width="100" Click="btnComplexHouseDFS_Click"/>
+                </StackPanel>
+            </GroupBox>
+            
         </StackPanel>
 
         <Canvas x:Name="Canvas1" Grid.Column="1"/>
