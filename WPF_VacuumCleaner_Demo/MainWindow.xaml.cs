@@ -4,7 +4,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using WPF_VacuumCleaner_Demo.Model;
-using Microsoft.Win32;
+using System;
 
 namespace WPF_VacuumCleaner_Demo
 {
@@ -18,29 +18,20 @@ namespace WPF_VacuumCleaner_Demo
             InitializeComponent();
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            Run();
-        }
-
-        private void Run(string fileName = null)
+        private void Run(string fileName, int x, int y)
         {
             House house;
-            if (fileName != null)
+            try
             {
                 house = VacuumCleanerFileDataAccess.LoadAsync(fileName);
             }
-            else
+            catch (Exception)
             {
-                house = new(8, 9);
-                CreateWalls(house);
+                MessageBox.Show("Can't load file.");
+                return;
             }
 
-            VacuumCleaner vacuum = new(1, 1, house);
-
-            RefreshCanvas(house, vacuum);
-
-            // Vacuum Cleaner Main Program
+            VacuumCleaner vacuum = new(x, y, house);
 
             vacuum.Run();
 
@@ -56,7 +47,7 @@ namespace WPF_VacuumCleaner_Demo
             {
                 for (int j = 0; j < house.Height; j++)
                 {
-                    var rect = new Rectangle()
+                    Rectangle rect = new()
                     {
                         Stroke = Brushes.LightBlue,
                         StrokeThickness = 1,
@@ -66,7 +57,7 @@ namespace WPF_VacuumCleaner_Demo
 
                     switch (house.GetTile(i, j))
                     {
-                        case Tile.Unclean:
+                        case Tile.Dirty:
                             rect.Fill = Brushes.White;
                             break;
                         case Tile.Clean:
@@ -107,43 +98,19 @@ namespace WPF_VacuumCleaner_Demo
             }
         }
 
-        private static void CreateWalls(House house)
+        private void btnSimpleRoom_Click(object sender, RoutedEventArgs e)
         {
-            house.SetTile(0, 0, Tile.Wall);
-            house.SetTile(0, 1, Tile.Wall);
-            house.SetTile(0, 2, Tile.Wall);
-            house.SetTile(0, 3, Tile.Wall);
-            house.SetTile(0, 4, Tile.Wall);
-            house.SetTile(0, 5, Tile.Wall);
-
-            house.SetTile(5, 0, Tile.Wall);
-            house.SetTile(5, 1, Tile.Wall);
-            house.SetTile(5, 2, Tile.Wall);
-            house.SetTile(5, 3, Tile.Wall);
-            house.SetTile(5, 4, Tile.Wall);
-            house.SetTile(5, 5, Tile.Wall);
-
-            house.SetTile(1, 0, Tile.Wall);
-            house.SetTile(2, 0, Tile.Wall);
-            house.SetTile(3, 0, Tile.Wall);
-            house.SetTile(4, 0, Tile.Wall);
-
-            house.SetTile(1, 5, Tile.Wall);
-            house.SetTile(2, 5, Tile.Wall);
-            house.SetTile(3, 5, Tile.Wall);
-            house.SetTile(4, 5, Tile.Wall);
-
-            house.SetTile(3, 3, Tile.Wall); // chimney
-            house.SetTile(3, 4, Tile.Wall); // chimney
+            Run(Environment.CurrentDirectory + @"\Resources\Simple room.txt", 1, 1);
         }
 
-        private void btnLoadFile_Click(object sender, RoutedEventArgs e)
+        private void btnNarrowPaths_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new();
-            if (openFileDialog.ShowDialog() == true)
-            {
-                Run(openFileDialog.FileName);
-            }
+            Run(Environment.CurrentDirectory + @"\Resources\Narrow paths.txt", 1, 1);
+        }
+
+        private void btnComplexHouse_Click(object sender, RoutedEventArgs e)
+        {
+            Run(Environment.CurrentDirectory + @"\Resources\Complex house.txt", 1, 1);
         }
     }
 }

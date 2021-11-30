@@ -36,7 +36,7 @@ namespace WPF_VacuumCleaner_Demo.Persistence
                             switch (int.Parse(numbers[i]))
                             {
                                 case 0:
-                                    house.SetTile(i, j, Tile.Unclean);
+                                    house.SetTile(i, j, Tile.Dirty);
                                     break;
                                 case 1:
                                     house.SetTile(i, j, Tile.Wall);

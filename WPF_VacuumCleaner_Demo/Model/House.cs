@@ -2,7 +2,7 @@
 {
     public enum Tile
     {
-        Unclean,
+        Dirty,
         Clean,
         CleanAndChecked,
         Wall

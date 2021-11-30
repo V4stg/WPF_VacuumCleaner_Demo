@@ -5,18 +5,22 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_VacuumCleaner_Demo"
         mc:Ignorable="d"
-        Title="Robot VacuumCleaner Demo" Height="450" Width="800">
-    <Grid Loaded="Grid_Loaded">
+        Title="Robot VacuumCleaner Demo" Height="600" Width="800">
+    <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
         <StackPanel Margin="10">
-            <Button x:Name="btnLoadFile" Content="Load File"
-                    Padding="5" Width="100" Click="btnLoadFile_Click"/>
+            <Button x:Name="btnSimpleRoom" Content="Simple room"
+                    Padding="5" Margin="2" Width="100" Click="btnSimpleRoom_Click"/>
+            <Button x:Name="btnNarrowPaths" Content="Narrow paths"
+                    Padding="5" Margin="2" Width="100" Click="btnNarrowPaths_Click"/>
+            <Button x:Name="btnComplexHouse" Content="Complex house"
+                    Padding="5" Margin="2" Width="100" Click="btnComplexHouse_Click"/>
         </StackPanel>
-        
+
         <Canvas x:Name="Canvas1" Grid.Column="1"/>
 
     </Grid>

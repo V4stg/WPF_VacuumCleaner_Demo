@@ -32,7 +32,7 @@ namespace WPF_VacuumCleaner_Demo.Model
 
                 } while (TryMoveToNeighborTile());
 
-            } while (TryFindUncleanTile(X, Y));
+            } while (TryFindDirtyTile(X, Y));
 
             #region lines for visualization
             House.ResetCheckedTiles();
@@ -46,22 +46,22 @@ namespace WPF_VacuumCleaner_Demo.Model
         /// <returns></returns>
         public bool TryMoveToNeighborTile()
         {
-            if (X + 1 < House.Width && House.GetTile(X + 1, Y) == Tile.Unclean)
+            if (X + 1 < House.Width && House.GetTile(X + 1, Y) == Tile.Dirty)
             {
                 X++;
                 return true;
             }
-            else if (X - 1 >= 0 && House.GetTile(X - 1, Y) == Tile.Unclean)
+            else if (X - 1 >= 0 && House.GetTile(X - 1, Y) == Tile.Dirty)
             {
                 X--;
                 return true;
             }
-            else if (Y - 1 >= 0 && House.GetTile(X, Y - 1) == Tile.Unclean)
+            else if (Y - 1 >= 0 && House.GetTile(X, Y - 1) == Tile.Dirty)
             {
                 Y--;
                 return true;
             }
-            else if (Y + 1 < House.Width && House.GetTile(X, Y + 1) == Tile.Unclean)
+            else if (Y + 1 < House.Width && House.GetTile(X, Y + 1) == Tile.Dirty)
             {
                 Y++;
                 return true;
@@ -73,19 +73,18 @@ namespace WPF_VacuumCleaner_Demo.Model
         }
 
         /// <summary>
-        /// If able to find the nearest unclean tile, then move there and return true.
+        /// If able to find the nearest dirty tile, then move there and return true.
         /// Otherwise return false.
         /// </summary>
         /// <returns></returns>
-        public bool TryFindUncleanTile(int x, int y)
+        public bool TryFindDirtyTile(int x, int y)
         {
             if ((x < 0) || (x >= House.Width)) return false;
             if ((y < 0) || (y >= House.Height)) return false;
 
-            if (House.GetTile(x, y) == Tile.Unclean)
+            if (House.GetTile(x, y) == Tile.Dirty)
             {
-                X = x;
-                Y = y;
+                SetPosition(x, y);
                 return true;
             }
             else if (House.GetTile(x, y) == Tile.Clean)
@@ -98,10 +97,10 @@ namespace WPF_VacuumCleaner_Demo.Model
             }
 
             return
-                TryFindUncleanTile(x, y + 1)
-                || TryFindUncleanTile(x + 1, y)
-                || TryFindUncleanTile(x, y - 1)
-                || TryFindUncleanTile(x - 1, y);
+                TryFindDirtyTile(x, y + 1)
+                || TryFindDirtyTile(x + 1, y)
+                || TryFindDirtyTile(x, y - 1)
+                || TryFindDirtyTile(x - 1, y);
         }
 
         public void CleanTile()
@@ -109,5 +108,10 @@ namespace WPF_VacuumCleaner_Demo.Model
             House.SetTile(X, Y, Tile.Clean);
         }
 
+        public void SetPosition(int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
     }
 }
