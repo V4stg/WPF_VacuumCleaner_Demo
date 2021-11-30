@@ -165,22 +165,10 @@ namespace WPF_VacuumCleaner_Demo.Model
                         House.SetTile(x, y, Tile.CleanAndChecked); // marking as visited
 
                         // look around
-                        if (x + 1 < House.Width) // RIGHT
-                        {
-                            TilesToCheckNext.Enqueue(new(x + 1, y));
-                        }
-                        if (y + 1 < House.Width) // UP
-                        {
-                            TilesToCheckNext.Enqueue(new(x, y + 1));
-                        }
-                        if (x - 1 >= 0) // LEFT
-                        {
-                            TilesToCheckNext.Enqueue(new(x - 1, y));
-                        }
-                        if (y - 1 >= 0) // DOWN
-                        {
-                            TilesToCheckNext.Enqueue(new(x, y - 1));
-                        }
+                        if (x + 1 < House.Width) TilesToCheckNext.Enqueue(new(x + 1, y)); // RIGHT
+                        if (y + 1 < House.Width) TilesToCheckNext.Enqueue(new(x, y + 1)); // UP
+                        if (x - 1 >= 0) TilesToCheckNext.Enqueue(new(x - 1, y)); // LEFT
+                        if (y - 1 >= 0) TilesToCheckNext.Enqueue(new(x, y - 1)); // DOWN
                     }
 
                 } while (TilesToCheck.Count > 0);
