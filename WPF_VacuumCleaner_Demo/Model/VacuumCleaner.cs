@@ -5,6 +5,9 @@ namespace WPF_VacuumCleaner_Demo.Model
 {
     public class VacuumCleaner
     {
+        public int TilesCleaned { get; private set; }
+        public int StepsTraveled { get; private set; }
+        public int TotalSteps { get; private set; }
         public int X { get; set; }
         public int Y { get; set; }
         public House House { get; set; }
@@ -69,22 +72,22 @@ namespace WPF_VacuumCleaner_Demo.Model
         {
             if (X + 1 < House.Width && House.GetTile(X + 1, Y) == Tile.Dirty)
             {
-                X++;
+                MoveTo(X + 1, Y); // RIGHT
                 return true;
             }
             else if (X - 1 >= 0 && House.GetTile(X - 1, Y) == Tile.Dirty)
             {
-                X--;
+                MoveTo(X - 1, Y); // LEFT
                 return true;
             }
             else if (Y - 1 >= 0 && House.GetTile(X, Y - 1) == Tile.Dirty)
             {
-                Y--;
+                MoveTo(X, Y - 1); // DOWN
                 return true;
             }
             else if (Y + 1 < House.Width && House.GetTile(X, Y + 1) == Tile.Dirty)
             {
-                Y++;
+                MoveTo(X, Y + 1); // UP
                 return true;
             }
             else
@@ -99,7 +102,7 @@ namespace WPF_VacuumCleaner_Demo.Model
         /// Otherwise return false.
         /// </summary>
         /// <returns></returns>
-        public bool TryFindDirtyTileDFS(int x, int y)
+        public bool TryFindDirtyTileDFS(int x, int y, int steps = 0)
         {
             if ((x < 0) || (x >= House.Width)) return false;
             if ((y < 0) || (y >= House.Height)) return false;
@@ -107,6 +110,8 @@ namespace WPF_VacuumCleaner_Demo.Model
             if (House.GetTile(x, y) == Tile.Dirty)
             {
                 SetPosition(x, y);
+                StepsTraveled += steps;
+                TotalSteps += steps;
                 return true;
             }
             else if (House.GetTile(x, y) == Tile.Clean)
@@ -119,10 +124,10 @@ namespace WPF_VacuumCleaner_Demo.Model
             }
 
             return
-                TryFindDirtyTileDFS(x, y + 1)
-                || TryFindDirtyTileDFS(x + 1, y)
-                || TryFindDirtyTileDFS(x, y - 1)
-                || TryFindDirtyTileDFS(x - 1, y);
+                TryFindDirtyTileDFS(x, y + 1, steps + 1) // UP
+                || TryFindDirtyTileDFS(x + 1, y, steps + 1) // RIGHT
+                || TryFindDirtyTileDFS(x, y - 1, steps + 1) // DOWN
+                || TryFindDirtyTileDFS(x - 1, y, steps + 1); // LEFT
         }
 
         /// <summary>
@@ -133,6 +138,7 @@ namespace WPF_VacuumCleaner_Demo.Model
         /// <returns></returns>
         public bool TryFindDirtyTileBFS(int x, int y)
         {
+            int steps = 0;
             Queue<Tuple<int, int>> TilesToCheck = new();
             Queue<Tuple<int, int>> TilesToCheckNext;
             TilesToCheck.Enqueue(new(x, y)); // start
@@ -150,6 +156,8 @@ namespace WPF_VacuumCleaner_Demo.Model
                     if (House.GetTile(x, y) == Tile.Dirty)
                     {
                         SetPosition(x, y);
+                        StepsTraveled += steps;
+                        TotalSteps += steps;
                         return true;
                     }
                     else if (House.GetTile(x, y) == Tile.Clean)
@@ -178,6 +186,7 @@ namespace WPF_VacuumCleaner_Demo.Model
                 } while (TilesToCheck.Count > 0);
 
                 TilesToCheck = TilesToCheckNext;
+                steps++;
 
             } while (TilesToCheckNext.Count > 0);
 
@@ -187,12 +196,20 @@ namespace WPF_VacuumCleaner_Demo.Model
         public void CleanTile()
         {
             House.SetTile(X, Y, Tile.Clean);
+            TilesCleaned++;
         }
 
         public void SetPosition(int x, int y)
         {
             X = x;
             Y = y;
+        }
+
+        public void MoveTo(int x, int y)
+        {
+            X = x;
+            Y = y;
+            TotalSteps++;
         }
     }
 }

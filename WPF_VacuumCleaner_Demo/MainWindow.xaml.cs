@@ -36,6 +36,7 @@ namespace WPF_VacuumCleaner_Demo
             vacuum.RunBFS();
 
             RefreshCanvas(house, vacuum);
+            RefreshStatistics(vacuum);
         }
 
         private void RunDFS(string fileName, int x, int y)
@@ -56,13 +57,22 @@ namespace WPF_VacuumCleaner_Demo
             vacuum.RunDFS();
 
             RefreshCanvas(house, vacuum);
+            RefreshStatistics(vacuum);
+        }
+
+        private void RefreshStatistics(VacuumCleaner vacuum)
+        {
+            txtTilesCleaned.Content = vacuum.TilesCleaned;
+            txtTotalSteps.Content = vacuum.TotalSteps;
+            txtTotalStepsTraveled.Content = vacuum.StepsTraveled;
         }
 
         private void RefreshCanvas(House house, VacuumCleaner vacuumCleaner)
         {
             Canvas1.Children.Clear();
-
             const int tileSize = 20;
+            
+            // draw tiles
             for (int i = 0; i < house.Width; i++)
             {
                 for (int j = 0; j < house.Height; j++)
@@ -101,6 +111,23 @@ namespace WPF_VacuumCleaner_Demo
 
             for (int i = 0; i < vacuumCleaner.Moves.Count - 1; i++)
             {
+                // draw orange dot to mark start position
+                if (i == 0)
+                {
+                    var startPoint = vacuumCleaner.Moves[i];
+                    Ellipse ellipse = new()
+                    {
+                        Width = tileSize / 2,
+                        Height = tileSize / 2,
+                        Fill = Brushes.Orange,
+                        StrokeThickness = 1,
+                    };
+                    Canvas.SetLeft(ellipse, startPoint.Item1 * tileSize + tileSize / 4);
+                    Canvas.SetTop(ellipse, house.Height * tileSize - (startPoint.Item2 * tileSize + tileSize * 3 / 4));
+                    Canvas1.Children.Add(ellipse);
+                }
+
+                // draw robot path
                 var lineStart = vacuumCleaner.Moves[i];
                 var lineEnd = vacuumCleaner.Moves[i + 1];
 

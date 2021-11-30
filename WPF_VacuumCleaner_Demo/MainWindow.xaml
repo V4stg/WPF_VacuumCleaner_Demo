@@ -12,30 +12,49 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel Orientation="Horizontal">
-            
-            <GroupBox Header="BFS:">
-                <StackPanel Margin="5">
-                    <Button x:Name="btnSimpleRoomBFS" Content="Simple room"
+        <StackPanel Orientation="Vertical" Margin="5">
+            <StackPanel Orientation="Horizontal">
+
+                <GroupBox Header="BFS:">
+                    <StackPanel Margin="5" Orientation="Vertical">
+                        <Button x:Name="btnSimpleRoomBFS" Content="Simple room"
                         Padding="5" Margin="2" Width="100" Click="btnSimpleRoomBFS_Click"/>
-                    <Button x:Name="btnNarrowPathsBFS" Content="Narrow paths"
+                        <Button x:Name="btnNarrowPathsBFS" Content="Narrow paths"
                         Padding="5" Margin="2" Width="100" Click="btnNarrowPathsBFS_Click"/>
-                    <Button x:Name="btnComplexHouseBFS" Content="Complex house"
+                        <Button x:Name="btnComplexHouseBFS" Content="Complex house"
                         Padding="5" Margin="2" Width="100" Click="btnComplexHouseBFS_Click"/>
-                </StackPanel>
-            </GroupBox>
-            
-            <GroupBox Header="DFS:">
-                <StackPanel Margin="5">
-                    <Button x:Name="btnSimpleRoomDFS" Content="Simple room"
+                    </StackPanel>
+                </GroupBox>
+
+                <GroupBox Header="DFS:">
+                    <StackPanel Margin="5" Orientation="Vertical">
+                        <Button x:Name="btnSimpleRoomDFS" Content="Simple room"
                         Padding="5" Margin="2" Width="100" Click="btnSimpleRoomDFS_Click"/>
-                    <Button x:Name="btnNarrowPathsDFS" Content="Narrow paths"
+                        <Button x:Name="btnNarrowPathsDFS" Content="Narrow paths"
                         Padding="5" Margin="2" Width="100" Click="btnNarrowPathsDFS_Click"/>
-                    <Button x:Name="btnComplexHouseDFS" Content="Complex house"
+                        <Button x:Name="btnComplexHouseDFS" Content="Complex house"
                         Padding="5" Margin="2" Width="100" Click="btnComplexHouseDFS_Click"/>
+                    </StackPanel>
+                </GroupBox>
+
+            </StackPanel>
+
+            <GroupBox Header="Statistics">
+                <StackPanel Margin="5" Orientation="Vertical">
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Label Content="Tiles cleaned: "/>
+                        <Label x:Name="txtTilesCleaned"/>
+                    </StackPanel>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Label Content="Total steps: "/>
+                        <Label x:Name="txtTotalSteps"/>
+                    </StackPanel>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <Label Content="Total steps traveled (BFS/DFS): "/>
+                        <Label x:Name="txtTotalStepsTraveled"/>
+                    </StackPanel>
                 </StackPanel>
             </GroupBox>
-            
         </StackPanel>
 
         <Canvas x:Name="Canvas1" Grid.Column="1"/>
