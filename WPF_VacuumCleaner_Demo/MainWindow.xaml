@@ -15,7 +15,7 @@
         <StackPanel Orientation="Vertical" Margin="5">
             <StackPanel Orientation="Horizontal">
 
-                <GroupBox Header="BFS:">
+                <GroupBox Header="Predefined houses:">
                     <StackPanel Margin="5" Orientation="Vertical">
                         <Button x:Name="btnSimpleRoomBFS" Content="Simple room"
                         Padding="5" Margin="2" Width="100" Click="btnSimpleRoomBFS_Click"/>
@@ -23,17 +23,6 @@
                         Padding="5" Margin="2" Width="100" Click="btnNarrowPathsBFS_Click"/>
                         <Button x:Name="btnComplexHouseBFS" Content="Complex house"
                         Padding="5" Margin="2" Width="100" Click="btnComplexHouseBFS_Click"/>
-                    </StackPanel>
-                </GroupBox>
-
-                <GroupBox Header="DFS:">
-                    <StackPanel Margin="5" Orientation="Vertical">
-                        <Button x:Name="btnSimpleRoomDFS" Content="Simple room"
-                        Padding="5" Margin="2" Width="100" Click="btnSimpleRoomDFS_Click"/>
-                        <Button x:Name="btnNarrowPathsDFS" Content="Narrow paths"
-                        Padding="5" Margin="2" Width="100" Click="btnNarrowPathsDFS_Click"/>
-                        <Button x:Name="btnComplexHouseDFS" Content="Complex house"
-                        Padding="5" Margin="2" Width="100" Click="btnComplexHouseDFS_Click"/>
                     </StackPanel>
                 </GroupBox>
 
@@ -50,7 +39,7 @@
                         <Label x:Name="txtTotalSteps"/>
                     </StackPanel>
                     <StackPanel Margin="5" Orientation="Horizontal">
-                        <Label Content="Total steps traveled (BFS/DFS): "/>
+                        <Label Content="Total steps traveled (by BFS): "/>
                         <Label x:Name="txtTotalStepsTraveled"/>
                     </StackPanel>
                 </StackPanel>

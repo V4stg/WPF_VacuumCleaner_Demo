@@ -39,27 +39,6 @@ namespace WPF_VacuumCleaner_Demo
             RefreshStatistics(vacuum);
         }
 
-        private void RunDFS(string fileName, int x, int y)
-        {
-            House house;
-            try
-            {
-                house = VacuumCleanerFileDataAccess.LoadAsync(fileName);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show("Can't load file.");
-                return;
-            }
-
-            VacuumCleaner vacuum = new(x, y, house);
-
-            vacuum.RunDFS();
-
-            RefreshCanvas(house, vacuum);
-            RefreshStatistics(vacuum);
-        }
-
         private void RefreshStatistics(VacuumCleaner vacuum)
         {
             txtTilesCleaned.Content = vacuum.TilesCleaned;
@@ -143,21 +122,6 @@ namespace WPF_VacuumCleaner_Demo
 
                 Canvas1.Children.Add(line);
             }
-        }
-
-        private void btnSimpleRoomDFS_Click(object sender, RoutedEventArgs e)
-        {
-            RunDFS(Environment.CurrentDirectory + @"\Resources\Simple room.txt", 1, 1);
-        }
-
-        private void btnNarrowPathsDFS_Click(object sender, RoutedEventArgs e)
-        {
-            RunDFS(Environment.CurrentDirectory + @"\Resources\Narrow paths.txt", 1, 1);
-        }
-
-        private void btnComplexHouseDFS_Click(object sender, RoutedEventArgs e)
-        {
-            RunDFS(Environment.CurrentDirectory + @"\Resources\Complex house.txt", 1, 1);
         }
 
         private void btnSimpleRoomBFS_Click(object sender, RoutedEventArgs e)

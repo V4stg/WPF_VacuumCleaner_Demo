@@ -42,27 +42,6 @@ namespace WPF_VacuumCleaner_Demo.Model
             #endregion
         }
 
-        public void RunDFS()
-        {
-            do
-            {
-                do
-                {
-                    #region lines for visualization
-                    House.ResetCheckedTiles();
-                    Moves.Add(new(X, Y));
-                    #endregion
-                    CleanTile(); // at starting point
-
-                } while (TryMoveToNeighborTile());
-
-            } while (TryFindDirtyTileDFS(X, Y));
-
-            #region lines for visualization
-            House.ResetCheckedTiles();
-            #endregion
-        }
-
         /// <summary>
         /// If any of the neighbor tiles is not wall or a clean tile, then move there and return true.
         /// Otherwise return false.
@@ -94,40 +73,6 @@ namespace WPF_VacuumCleaner_Demo.Model
             {
                 return false;
             }
-        }
-
-        /// <summary>
-        /// algo: DFS
-        /// If able to find the nearest dirty tile, then move there and return true.
-        /// Otherwise return false.
-        /// </summary>
-        /// <returns></returns>
-        public bool TryFindDirtyTileDFS(int x, int y, int steps = 0)
-        {
-            if ((x < 0) || (x >= House.Width)) return false;
-            if ((y < 0) || (y >= House.Height)) return false;
-
-            if (House.GetTile(x, y) == Tile.Dirty)
-            {
-                SetPosition(x, y);
-                StepsTraveled += steps;
-                TotalSteps += steps;
-                return true;
-            }
-            else if (House.GetTile(x, y) == Tile.Clean)
-            {
-                House.SetTile(x, y, Tile.CleanAndChecked); // marking as visited
-            }
-            else if (House.GetTile(x, y) == Tile.Wall || House.GetTile(x, y) == Tile.CleanAndChecked)
-            {
-                return false;
-            }
-
-            return
-                TryFindDirtyTileDFS(x, y + 1, steps + 1) // UP
-                || TryFindDirtyTileDFS(x + 1, y, steps + 1) // RIGHT
-                || TryFindDirtyTileDFS(x, y - 1, steps + 1) // DOWN
-                || TryFindDirtyTileDFS(x - 1, y, steps + 1); // LEFT
         }
 
         /// <summary>
